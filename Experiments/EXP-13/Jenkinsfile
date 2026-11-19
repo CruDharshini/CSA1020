@@ -1,0 +1,14 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps { checkout scm }
+        }
+        stage('Build Docker Image') {
+            steps { sh 'docker build -t csa1020-sample-app .' }
+        }
+        stage('Test') {
+            steps { sh 'python -m compileall -q .' }
+        }
+    }
+}
