@@ -1,0 +1,15 @@
+name: Experiment 14 - Docker Build and Publish
+on:
+  push:
+    branches: [experiments-09-to-25]
+    paths:
+      - "Experiments/EXP-14/**"
+      - ".github/workflows/exp14-docker.yml"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t csa1020-exp14:${{ github.sha }} -f Experiments/EXP-14/Dockerfile Experiments/EXP-14

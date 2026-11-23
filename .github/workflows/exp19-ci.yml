@@ -1,0 +1,25 @@
+name: Experiment 19 - Flask CI and Docker Build
+on:
+  push:
+    branches: [experiments-09-to-25]
+    paths:
+      - "Experiments/EXP-19/**"
+      - ".github/workflows/exp19-ci.yml"
+  pull_request:
+    paths:
+      - "Experiments/EXP-19/**"
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Experiments/EXP-19
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt pytest
+      - run: pytest -q
+      - name: Build Docker image
+        run: docker build -t csa1020-exp19:${{ github.sha }} .
